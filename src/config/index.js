@@ -8,8 +8,8 @@ export const ERROR_HENDLER = ({graphQLErrors, networkError, ...rest}) => {
         alert(errors.join("\r"))
         return
     } else if(networkError) {
-        console.log(networkError.message)
+        console.error(networkError.message)
         return
     } 
-    console.log(rest)
+    console.error(rest)
 }
