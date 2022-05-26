@@ -2,12 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import CartItem from "./compoents/CartItem";
 import Scroller from "./compoents/Scroller";
+import { order } from "./services/cartService";
 
 class Cart extends React.Component {
 
     componentDidMount() {
         const {products, totalPrices, totalQuantity, tax} = this.props
-        localStorage.setItem("cart", JSON.stringify({
+        sessionStorage.setItem("cart", JSON.stringify({
             products,
             totalPrices,
             totalQuantity,
@@ -15,14 +16,6 @@ class Cart extends React.Component {
         }))
     }
 
-    order = () => {
-        const {products} = this.props
-        if(products.length===0) {
-            alert("Nothing to order!")
-            return
-        }
-        alert("Ordered!")
-    }
 
     componentDidUpdate() {
         this.componentDidMount()
@@ -61,7 +54,9 @@ class Cart extends React.Component {
                         <span className="cart-value">{currencies[selected].symbol}{totalPrices[selected]}</span>
                     </p>
                 </div>
-                <button className="cart success-button" onClick={this.order}>Order</button>
+                {products.length !== 0 &&
+                    <button className="cart success-button" onClick={order}>Order</button>
+                }
                 <Scroller/>
             </section>
         )

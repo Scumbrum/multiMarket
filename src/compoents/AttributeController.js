@@ -9,7 +9,7 @@ class AttributeController extends React.Component {
     getIndex = () => {
         const {index} = this.props
         let productIndex = 0
-        if(index === -1) {
+        if(index === undefined) {
             const product = this.props.products.find(product => product.id === this.props.selected)
             productIndex = this.props.products.indexOf(product)
         } else {

@@ -1,6 +1,7 @@
 import React from "react";
 
 
+
 class ImageSwiper extends React.Component {
 
     constructor(props) {
@@ -10,9 +11,7 @@ class ImageSwiper extends React.Component {
         }
     }
 
-    swipe = (e,direction) => {
-        
-        
+    swipe = (direction) => {
         const {gallery} = this.props
         let pos = this.state.current
         if(pos+direction === gallery.length) {
@@ -33,14 +32,20 @@ class ImageSwiper extends React.Component {
 
    
     render() {
-        
+        const {gallery, amount} = this.props
         return(
             <div className="swiper">
                 {this.getIMages()}
+                {gallery.length > amount && 
                 <div className="controlls">
-                    <span onClick={(e)=> this.swipe(e,-1)} className="left">{"<"}</span>
-                    <span onClick={(e)=> this.swipe(e,1)} className="right">{">"}</span>
+                    <span onClick={()=> this.swipe(-1)} className="left">
+                        <i className="left-arrow"/>
+                    </span>
+                    <span onClick={()=> this.swipe(1)} className="right">
+                        <i className="right-arrow"/>
+                    </span>
                 </div>
+                }
             </div>
         )
     }

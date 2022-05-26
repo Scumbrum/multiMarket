@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const cartItems = JSON.parse(localStorage.getItem("cart"))
+    const cartItems = JSON.parse(sessionStorage.getItem("cart"))
     cartItems && this.props.loadCart(cartItems)
   }
 

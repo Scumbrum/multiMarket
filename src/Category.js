@@ -28,7 +28,6 @@ class Category extends React.Component {
             }
         }
         return 
-        
     }
 
     componentDidUpdate() {

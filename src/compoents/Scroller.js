@@ -11,25 +11,25 @@ class Scroller extends React.Component {
     }
 
     componentDidMount() {
-        
         window.addEventListener("wheel", this.listener)
+        window.addEventListener("scroll", this.listener)
     }
 
     componentWillUnmount() {
         window.removeEventListener("wheel", this.listener)
+        window.addEventListener("scroll", this.listener)
     }
 
     listener = () => {
-        if(window.scrollY>100 && !this.state.showScroller) {
+        if(window.scrollY>150 && !this.state.showScroller) {
             this.setState({showScroller: true})
         }
-        if(window.scrollY<200 && this.state.showScroller) {
+        if(window.scrollY<=150 && this.state.showScroller) {
             this.setState({showScroller: false})
         }
     }
 
     toTop = () => {
-        this.setState({showScroller: false})
         let height = window.scrollY
         const amount = height/15
         const interval = window.setInterval(() => {
@@ -44,7 +44,9 @@ class Scroller extends React.Component {
     render() {
         return(
             this.state.showScroller &&
-            <button onClick={this.toTop} className="scroller"/>
+            <div className="scroller-container">
+                <button onClick={this.toTop} className="scroller"/>
+            </div>
         )
     }
 }

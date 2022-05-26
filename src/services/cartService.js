@@ -29,6 +29,10 @@ export function cartAttributeAdaptor(products, attributeName, index, productInde
     }
 }
 
+export function order() {
+    alert("Ordered")
+}
+
 function getTotalPrices(prices, product, action) {
     const totalPrices = [...prices]
     product.prices.forEach((element, index) => {

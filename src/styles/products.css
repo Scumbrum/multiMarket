@@ -163,6 +163,19 @@ a .product-title {
     margin-bottom: 10px;
 }
 
+.description h3, .description h1 {
+    margin: 20px 0 5px;
+    font-weight: bold;
+}
+
+.description h3 {
+    font-size: 20px;
+}
+
+.description h1 {
+    font-size: 24px
+}
+
 .product-content .text-attribute, .product-content .swatch-attribute {
     min-width: 40px;
     height: 40px;
@@ -173,7 +186,7 @@ a .product-title {
     height: min(calc(50vw + 40px), 800px);
 }
 
-.vertical-list img {
+.vertical-list .swiper img {
     width: 100%;
     max-height: min(10vw, 170px);;
 }

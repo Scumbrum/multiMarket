@@ -33,6 +33,7 @@ class Header extends React.Component {
             fetchCurrencies(r.data.currencies)
         })
         .catch(r=>setCategoryError(r.message))
+
         document.addEventListener("click", this.unsetter)
     }
 
@@ -60,7 +61,6 @@ class Header extends React.Component {
             this.props.handler()
         }
     }
-
 
     render() {
         const {categories, selectCategories, count, selectedCateg} = this.props

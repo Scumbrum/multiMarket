@@ -10,9 +10,11 @@ import ImageSwiper from "./ImageSwiper";
 class CartItem extends React.Component {
 
     handler = ({attributeName, index, productIndex})=> {
-        const {products} = this.props
-        const newProducts = cartAttributeAdaptor(products, attributeName, index, productIndex)
-        this.props.setCartAttribute(newProducts)
+        setTimeout(()=> {
+            const {products} = this.props
+            const newProducts = cartAttributeAdaptor(products, attributeName, index, productIndex)
+            this.props.setCartAttribute(newProducts)
+        }, 50)
     }
 
     increment = () => {
@@ -22,9 +24,11 @@ class CartItem extends React.Component {
     }
 
     decrement = () => {
-        const {decrementProduct, index, totalPrices} = this.props
-        const prices = removeTotalPrices(totalPrices,this.props.product)
-        decrementProduct(index, prices)
+        setTimeout(()=> {
+            const {decrementProduct, index, totalPrices} = this.props
+            const prices = removeTotalPrices(totalPrices,this.props.product)
+            decrementProduct(index, prices)
+        }, 50)
     }
 
     getGallery = () => {
@@ -36,7 +40,6 @@ class CartItem extends React.Component {
    
     render() {
         const {product, selectedCurrency, all, index} = this.props
-        
         return(
             <li className="cart-item">
                 <div className="item-content">
@@ -44,12 +47,19 @@ class CartItem extends React.Component {
                         <h1 className="cart-item-title">{product.name}</h1>
                         <h3>{product.brand}</h3>
                     </div>
-                    <p className="item-price">{product.prices[selectedCurrency].currency.symbol}{product.prices[selectedCurrency].amount}</p>
+                    <p className="item-price">
+                        {product.prices[selectedCurrency].currency.symbol}{product.prices[selectedCurrency].amount}
+                    </p>
                     {product.attributes.map(attribute =>
                         <div key={attribute.name} className="item-attributes">  
                             <p>{attribute.name}:</p>
                             <AttributeController
-                            {...getAttributeProps(product, attribute.name, attribute.items, false, this.handler, index)}
+                            {...getAttributeProps({product, 
+                                attributeName:attribute.name, 
+                                elements:attribute.items, 
+                                separate:false, 
+                                handler:this.handler,
+                                index})}
                             />
                         </div>
                     )}

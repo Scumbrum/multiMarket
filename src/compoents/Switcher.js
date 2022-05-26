@@ -34,7 +34,8 @@ class Item extends React.Component {
         return(
                 currencies.length !== 0 &&
                 <div className="switcher">  
-                    <span onClick={this.opener} ref={this.ref} className = {`toggler ${this.state.opened ? "active" : ""}`}>
+                    <span onClick={this.opener} ref={this.ref}
+                    className = {`toggler ${this.state.opened ? "active" : ""}`}>
                         {currencies[selectedCurr].symbol}
                     </span>
                     {this.state.opened &&

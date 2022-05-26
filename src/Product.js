@@ -38,7 +38,7 @@ class Product extends React.Component {
     
     componentDidUpdate() {
         const {products} = this.props
-        localStorage.setItem("attributes", JSON.stringify(products))
+        sessionStorage.setItem("attributes", JSON.stringify(products))
     }
 
     handler = ({attributeName, index})=> {
@@ -67,7 +67,11 @@ class Product extends React.Component {
                 <div className="product-container">
                     <div className="product-view">
                         <AttributeController
-                        {...getAttributeProps(product, "image", product.gallery, true, handler)}/>
+                        {...getAttributeProps({product,
+                            attributeName:"image",
+                            elements:product.gallery,
+                            separate: true,
+                            handler})}/>
                     </div>
                     <div className="product-content">
                         <h1>{product.name}</h1>
@@ -76,7 +80,12 @@ class Product extends React.Component {
                             <div key={attribute.name} className="product-attributes">  
                                 <h3 className="attribute-title">{attribute.name}</h3>
                                 <AttributeController
-                                {...getAttributeProps(product, attribute.name, attribute.items, false, handler)}/>
+                                {...getAttributeProps({product,
+                                    attributeName:attribute.name,
+                                    elements:attribute.items,
+                                    separate:false,
+                                    handler})
+                                }/>
                             </div>
                         )}
                         <div>
@@ -88,7 +97,9 @@ class Product extends React.Component {
                             </p>
                         </div>
                         {product.inStock ? 
-                        <Link className="to-cart-button" onClick={this.adder} to="../../cart">Add to cart</Link>:
+                        <Link className="to-cart-button" onClick={this.adder} to="../../cart">
+                            Add to cart
+                        </Link>:
                         <button className="disable">Not in Stock</button>}
                         <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}}
                         className="description"/>

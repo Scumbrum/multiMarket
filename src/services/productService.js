@@ -18,7 +18,7 @@ function textPattern(element) {
     return <p className="text-attribute">{element.value}</p>
 }
 
-export function getAttributeProps(product, attributeName, elements, separate, handler, index=-1) {
+export function getAttributeProps({product, attributeName, elements, separate, handler, index}) {
     const currentAttribute = product.currentAttributes && product.currentAttributes[attributeName]
     const attribute = product.attributes 
                     && product.attributes.find(attribute => attribute.name === attributeName)
@@ -43,7 +43,7 @@ export async function fetchProducts(category, client) {
 }
 
 export async function getData(selected, client){
-    const items = JSON.parse(localStorage.getItem("attributes"))
+    const items = JSON.parse(sessionStorage.getItem("attributes"))
     const pathItem = window.location.pathname.split("/")[2]
     let product = items && items.find(item => item.id === pathItem)
     const current = selected || pathItem
