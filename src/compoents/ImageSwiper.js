@@ -10,7 +10,9 @@ class ImageSwiper extends React.Component {
         }
     }
 
-    swipe = (direction) => {
+    swipe = (e,direction) => {
+        
+        
         const {gallery} = this.props
         let pos = this.state.current
         if(pos+direction === gallery.length) {
@@ -36,8 +38,8 @@ class ImageSwiper extends React.Component {
             <div className="swiper">
                 {this.getIMages()}
                 <div className="controlls">
-                    <span onClick={()=> this.swipe(-1)} className="left">{"<"}</span>
-                    <span onClick={()=> this.swipe(1)} className="right">{">"}</span>
+                    <span onClick={(e)=> this.swipe(e,-1)} className="left">{"<"}</span>
+                    <span onClick={(e)=> this.swipe(e,1)} className="right">{">"}</span>
                 </div>
             </div>
         )

@@ -7,13 +7,17 @@ import {onError} from "@apollo/client/link/error"
 import {configureStore} from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import rootReducer from './redux/rootReducer';
+import { ERROR_HENDLER, SERVER } from './config';
 
 const store = configureStore({reducer: rootReducer})
 
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: from([onError((data)=>data.graphQLErrors?.map(g=> alert(g.message))), new HttpLink({uri: "http://localhost:4000/"})])
+  link: from([
+    onError(ERROR_HENDLER),
+    new HttpLink({uri:SERVER})
+  ])
 })
 
 
