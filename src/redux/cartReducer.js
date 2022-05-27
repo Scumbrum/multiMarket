@@ -49,6 +49,13 @@ export default function cartReducer(state = initialState, action) {
         case "SetCartAttribute":
             return {...state,
                 products: cloneDeep(action.payload)}
+        case "ClearBag":
+            return {
+                ...state,
+                products:[],
+                totalQuantity: 0,
+                totalPrices: [],
+            }
         default:
             return state
     }

@@ -62,6 +62,12 @@ export function setCartAttribute(products) {
     }
 }
 
+export function clearBag() {
+    return {
+        type:"ClearBag"
+    }
+}
+
 export function addProduct(products, newPrices) {
     return {
         type:"AddProduct",

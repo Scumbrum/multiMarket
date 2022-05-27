@@ -29,7 +29,8 @@ export function cartAttributeAdaptor(products, attributeName, index, productInde
     }
 }
 
-export function order() {
+export function order(clearer) {
+    clearer()
     alert("Ordered")
 }
 

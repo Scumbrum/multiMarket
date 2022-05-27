@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import CartItem from "./compoents/CartItem";
 import Scroller from "./compoents/Scroller";
 import { order } from "./services/cartService";
+import {clearBag} from "./redux/actions"
 
 class Cart extends React.Component {
 
@@ -21,8 +22,9 @@ class Cart extends React.Component {
         this.componentDidMount()
     }
 
-    getTexed = () => {
+    getTaxed = () => {
         const {selected,totalPrices, tax} = this.props
+        console.log(totalPrices[selected])
         if(totalPrices[selected]) {
             return Math.round(tax * totalPrices[selected] * 100) / 100
         }
@@ -31,6 +33,7 @@ class Cart extends React.Component {
 
     render() {
         const {products, selected, currencies, totalPrices, tax} = this.props
+        
         return(
             <section className="main-container">
                 <h1 className="cart-title">Cart</h1>
@@ -40,9 +43,9 @@ class Cart extends React.Component {
                 </ul>
                 <div className="cart-info">
                     <p className="cart-prop">
-                        <span className="cart-field">Text {tax*100}%:</span>
+                        <span className="cart-field">Tax {tax*100}%:</span>
                         <span className="cart-value">
-                            {currencies[selected].symbol}{this.getTexed()}
+                            {currencies[selected].symbol}{this.getTaxed()}
                         </span>
                     </p>
                     <p className="cart-prop">
@@ -55,7 +58,7 @@ class Cart extends React.Component {
                     </p>
                 </div>
                 {products.length !== 0 &&
-                    <button className="cart success-button" onClick={order}>Order</button>
+                    <button className="cart success-button" onClick={()=>order(this.props.clearBag)}>Order</button>
                 }
                 <Scroller/>
             </section>
@@ -74,6 +77,9 @@ const stateToProps = (state) => {
     }
 }
 
+const dispatchToProps = {
+    clearBag
+}
 
 
-export default connect(stateToProps, null)(Cart)
+export default connect(stateToProps, dispatchToProps)(Cart)

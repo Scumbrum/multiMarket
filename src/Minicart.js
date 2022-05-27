@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "./compoents/CartItem";
 import { order } from "./services/cartService";
+import {clearBag} from "./redux/actions";
 import "./styles/cart.css"
 
 class MiniCart extends React.Component {
@@ -40,7 +41,9 @@ class MiniCart extends React.Component {
                     </div>
                     <div className="minicart-controlls">
                         <Link to="/cart" className="cart-button">View Bag</Link>
-                        <button className="success-button" onClick={order}>Check out</button>
+                        <button className="success-button" onClick={()=>order(this.props.clearBag)}>
+                            Check out
+                        </button>
                     </div>
                 </>:
                 <h2 className="empty">Empty bag</h2>}
@@ -61,6 +64,9 @@ const stateToProps = (state) => {
     }
 }
 
+const dispatchToProps = {
+    clearBag
+}
 
 
-export default connect(stateToProps, null)(MiniCart)
+export default connect(stateToProps, dispatchToProps)(MiniCart)

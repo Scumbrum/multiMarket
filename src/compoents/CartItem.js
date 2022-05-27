@@ -24,10 +24,12 @@ class CartItem extends React.Component {
     }
 
     decrement = () => {
+        const {decrementProduct, index, totalPrices, products, product} = this.props
         setTimeout(()=> {
-            const {decrementProduct, index, totalPrices} = this.props
-            const prices = removeTotalPrices(totalPrices,this.props.product)
-            decrementProduct(index, prices)
+            if(products.indexOf(product)!==-1) {
+                const prices = removeTotalPrices(totalPrices,product)
+                decrementProduct(index, prices)
+            }
         }, 50)
     }
 
