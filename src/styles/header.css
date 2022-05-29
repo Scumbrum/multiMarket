@@ -1,14 +1,15 @@
 .header {
-    position: relative;
+    position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 3;
     width: 100%;
     background-color: #fff;
     min-height: 60px;
     display: flex;
 }
 .container {
-    width: 85%;
+    width: 100%;
+    padding: 0 20px;
     max-width: 1200px;
     display: flex;
     justify-content: space-between;
@@ -123,7 +124,8 @@
 .cart-counter {
     position: absolute;
     transform: translate(-12px, -2px);
-    width: 15px;
+    min-width: 15px;
+    padding: 0 2px;
     height: 15px;
     background-color: #1D1F22;
     color: #fff;

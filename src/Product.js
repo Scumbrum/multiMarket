@@ -4,18 +4,19 @@ import {loadProductInfo, addProduct, selectProduct, setProductsError} from "./re
 import DOMPurify from "dompurify"
 import AttributeController from "./compoents/AttributeController";
 import {productAdaptor, getAttributeProps, getData, attributeAdaptor} from "./services/productService"
-import { Link } from "react-router-dom";
 import { addTotalPrices, cartProductAdaptor} from "./services/cartService";
 import NotFound from "./compoents/NotFound";
 import ErrorPage from "./compoents/ErrorPage";
 import Loader from "./compoents/Loader";
 import Scroller from "./compoents/Scroller";
+import Flier from "./compoents/Flier";
 class Product extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            exist: true
+            exist: true,
+            showAnimation: false
         }
     }
 
@@ -50,9 +51,15 @@ class Product extends React.Component {
     adder = () => {
         const {addProduct, cartProducts, selected, products} = this.props
         const product = products.find(product => product.id === selected)
-        const newProducts = cartProductAdaptor(product,cartProducts)
+        const newProducts = cartProductAdaptor(product, cartProducts)
         const totalPrices = addTotalPrices(this.props.totalPrices, product)
         addProduct(newProducts, totalPrices)
+        this.animatioHandler()
+    }
+
+    animatioHandler = () => {
+        this.setState({showAnimation: true})
+        setTimeout(()=>this.setState({showAnimation: false}), 500)
     }
 
     render() {
@@ -96,13 +103,18 @@ class Product extends React.Component {
                                 </b>
                             </p>
                         </div>
-                        {product.inStock ? 
-                        <Link className="to-cart-button" onClick={this.adder} to="../../cart">
-                            Add to cart
-                        </Link>:
-                        <button className="disable">Not in Stock</button>}
-                        <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}}
-                        className="description"/>
+                        <div className="product-controlls">
+                            <Flier shown = {this.state.showAnimation}>
+                                <img src={product.gallery[0]} alt="flier"/>
+                            </Flier>
+                            {product.inStock ? 
+                            <button className="to-cart-button" onClick={this.adder}>
+                                Add to cart
+                            </button>:
+                            <button className="disable">Not in Stock</button>}
+                            <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}}
+                            className="description"/>
+                        </div>
                     </div>
                 </div>
                 <Scroller/>

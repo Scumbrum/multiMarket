@@ -1,23 +1,5 @@
 import { getProduct, getProducts } from "../queries"
 
-const patterns = {
-    "image": imagePattern,
-    "text": textPattern,
-    "swatch": swatchPattern
-}
-
-function swatchPattern(element) {
-    return <span className="swatch-attribute" style={{background: element.value}}/>
-}
-
-function imagePattern(element) {
-    return <img src={element} alt={element} className="gallery-item"/>
-}
-
-function textPattern(element) {
-    return <p className="text-attribute">{element.value}</p>
-}
-
 export function getAttributeProps({product, attributeName, elements, separate, handler, index}) {
     const currentAttribute = product.currentAttributes && product.currentAttributes[attributeName]
     const attribute = product.attributes 
@@ -83,6 +65,21 @@ export function productsDistibution(products, id) {
     return {product, prev, next}
 }
 
+export function calculateTrack(element) {
+    let difY = element.getBoundingClientRect().top - 15
+    difY += element.offsetHeight / 3
+    let difX = 0
+    if(window.innerWidth > 1200) {
+        const base = (window.innerWidth - 1200)/2
+        difX = base + 1170
+    } else {
+        difX = window.innerWidth - 40
+    }
+    difX -= element.getBoundingClientRect().left
+    difX -= element.clientWidth / 2
+    return [difX, difY]
+}
+
 function createAttributes(attributes, currents) {
     const currentAttributes = {}
     attributes.forEach((attribute) => {
@@ -97,4 +94,22 @@ function getAttribute(currents, name) {
         return 0
     }
     return currents[name] || 0
+}
+
+const patterns = {
+    "image": imagePattern,
+    "text": textPattern,
+    "swatch": swatchPattern
+}
+
+function swatchPattern(element) {
+    return <span className="swatch-attribute" style={{background: element.value}}/>
+}
+
+function imagePattern(element) {
+    return <img src={element} alt={element} className="gallery-item"/>
+}
+
+function textPattern(element) {
+    return <p className="text-attribute">{element.value}</p>
 }

@@ -17,6 +17,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
+    this.position = 0
     this.state = {
       loading: true,
       cover: false
@@ -29,6 +30,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
+    window.scrollTo({top:this.position})
     const {selectedCateg, selectCategories, categories} = this.props
     if(categories.length!==0) {
       const index = getCategoryIndex(categories, selectedCateg)
@@ -42,11 +44,16 @@ class App extends React.Component {
   }
 
   coverer = () => {
+    if(!this.state.cover) {
+      this.position = window.scrollY
+    } 
     this.setState({cover: !this.state.cover})
+    
   }
 
   render() {
     const {headerError, categories, selectedCateg} = this.props
+    const transform = this.state.cover&& `translate(0px,${-this.position}px)`
     return (
       <>
         {this.state.cover && <div className="shadow"/>}
@@ -55,15 +62,17 @@ class App extends React.Component {
           <div className={this.state.cover ? "no-scroll":""}>
             <Header client={client} handler={this.coverer}/>
             {!this.state.loading && !headerError && selectedCateg!==-1 ?
-            <Routes>
-              <Route index element = {<Navigate to={categories[0].name}/>}/>
-              <Route path={"/:category"}>
-                <Route index element = {<Category name = {categories[selectedCateg].name} client = {client}/>}/>
-                <Route path="/:category/:id" element = {<Product client={client}/>}/>
-                <Route path="/:category/:id/*" element = {<NotFound/>}/> 
-              </Route>
-              <Route path="/cart" element={<Cart/>}/>
-            </Routes>:
+            <main style = {{transform}}>
+              <Routes>
+                <Route index element = {<Navigate to={categories[0].name}/>}/>
+                <Route path={"/:category"}>
+                  <Route index element = {<Category name = {categories[selectedCateg].name} client = {client}/>}/>
+                  <Route path="/:category/:id" element = {<Product client={client}/>}/>
+                  <Route path="/:category/:id/*" element = {<NotFound/>}/> 
+                </Route>
+                <Route path="/cart" element={<Cart/>}/>
+              </Routes>
+            </main>:
             !this.state.loading && !headerError?
             <NotFound/>:
             !headerError ?

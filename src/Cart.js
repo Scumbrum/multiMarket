@@ -7,7 +7,7 @@ import {clearBag} from "./redux/actions"
 
 class Cart extends React.Component {
 
-    componentDidMount() {
+    componentDidUpdate() {
         const {products, totalPrices, totalQuantity, tax} = this.props
         sessionStorage.setItem("cart", JSON.stringify({
             products,
@@ -15,11 +15,6 @@ class Cart extends React.Component {
             totalQuantity,
             tax
         }))
-    }
-
-
-    componentDidUpdate() {
-        this.componentDidMount()
     }
 
     getTaxed = () => {

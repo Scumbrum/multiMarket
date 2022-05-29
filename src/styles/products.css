@@ -15,16 +15,17 @@
     row-gap: min(7vmin,70px);
 }
 
-.produt-item {
+.product-item {
     width: 100%;
     padding: 12px;
+    position: relative;
 }
 
-.produt-item:hover {
+.product-item:hover {
     box-shadow: 0 0 15px 3px #EEEEEE;
 }
 
-.produt-item:hover .icon {
+.product-item:hover .icon {
     opacity: 1;
 }
 
@@ -32,6 +33,20 @@
     width: 100%;
     height: min(28vw, 366.66px);
     position: relative;
+}
+
+.stock-label {
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    left: 0;
+    width: 100%;
+    background-color: #EEEEEE;
+    color: #1D1F22;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 15px 0;
+    font-weight: bold;
 }
 
 .product-preview .main {
@@ -43,8 +58,8 @@
     position: absolute;
     bottom: 0;
     right: 10%;
-    height: 40px;
-    width: 40px;
+    height: 60px;
+    width: 60px;
     transform: translate(0, 40%);
     border-radius: 100%;
     background-color: #5ECE7B;
@@ -53,14 +68,15 @@
     align-items: center;
     opacity: 0;
     transition-duration: .5s;
+    cursor: pointer;
 }
 
 .icon img {
-    width: 60%;
-    height: 60%;
+    width: 50%;
+    height: 50%;
 }
 
-a .product-title {
+.product-item .product-title {
     margin-top: 30px;
     color: #1D1F22;
 }
@@ -95,6 +111,13 @@ a .product-title {
 .product-view {
     display: flex;
     height: fit-content;
+}
+
+.product-view .swiper .controlls {
+    top:0;
+    height: fit-content;
+    right: 50%;
+    transform: translate(50%,0);
 }
 
 .active .gallery-item {
@@ -133,10 +156,19 @@ a .product-title {
 .to-cart-button {
     color: #FFF;
     background: #5ECE7B;
+    cursor: pointer;
+    border: 2px solid #5ECE7B;
+    transition-duration: .5s;
+}
+
+.to-cart-button:hover{
+    background-color: transparent;
+    color: #5ECE7B;
 }
 
 .brand {
     margin-top: 5px;
+    color: #1D1F22;
 }
 
 .description {
@@ -183,10 +215,15 @@ a .product-title {
 
 .vertical-list .swiper  {
     width: 100%;
-    height: min(calc(50vw + 40px), 800px);
+    padding-top: 25px;
+    height: unset;
 }
 
 .vertical-list .swiper img {
     width: 100%;
     max-height: min(10vw, 170px);;
+}
+
+.product-controlls {
+    position: relative;
 }

@@ -44,8 +44,8 @@ class Scroller extends React.Component {
     render() {
         return(
             this.state.showScroller &&
-            <div className="scroller-container">
-                <button onClick={this.toTop} className="scroller"/>
+            <div className="scroller-container" onClick={this.toTop}>
+                <button className="scroller"/>
             </div>
         )
     }

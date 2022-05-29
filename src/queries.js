@@ -6,6 +6,8 @@ query category($title:String!){
       products{
         id
         name,
+        brand,
+        inStock,
         gallery,
         prices {
           amount,

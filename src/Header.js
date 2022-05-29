@@ -50,6 +50,11 @@ class Header extends React.Component {
         }
     }
 
+    componentDidUpdate(){
+        const {cart} = this.props
+        sessionStorage.setItem("cart", JSON.stringify(cart))
+    }
+
     componentWillUnmount(){
         document.removeEventListener("click", this.unsetter)
     }
@@ -63,7 +68,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {categories, selectCategories, count, selectedCateg} = this.props
+        const {categories, selectCategories, selectedCateg} = this.props
         return(
             <header className="header">
                 <div className="container">
@@ -87,7 +92,10 @@ class Header extends React.Component {
                         <Switcher/>
                         <div className="minicart-toggler" ref={this.references[0]} onClick={this.opener}>
                             <img src={cartIcon} alt="cart"/>
-                            {count!==0 && <span className="cart-counter">{count}</span>}
+                            {this.props.cart.totalQuantity!==0 &&
+                            <span className="cart-counter">
+                                {this.props.cart.totalQuantity}
+                            </span>}
                             {this.state.opened && <Minicart innerRef={this.references[1]}/>}
                         </div>
                     </div>
@@ -102,7 +110,7 @@ const stateToProps = (state) => {
     return {
         categories: state.categoryReducer.categories,
         selectedCateg: state.categoryReducer.selected,
-        count: state.cartReducer.totalQuantity,
+        cart: state.cartReducer,
     }
 }
 
