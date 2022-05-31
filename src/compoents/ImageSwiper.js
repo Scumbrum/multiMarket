@@ -29,7 +29,6 @@ class ImageSwiper extends React.Component {
         const {current} = this.state
         return gallery.filter((_, index) => index >= current && index < amount + current)
     }
-
    
     render() {
         const {gallery, amount} = this.props

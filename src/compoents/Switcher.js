@@ -32,22 +32,21 @@ class Item extends React.Component {
     render() {
         const {currencies, selectedCurr, selectCurrency} = this.props
         return(
-                currencies.length !== 0 &&
-                <div className="switcher">  
-                    <span onClick={this.opener} ref={this.ref}
-                    className = {`toggler ${this.state.opened ? "active" : ""}`}>
-                        {currencies[selectedCurr].symbol}
-                    </span>
-                    {this.state.opened &&
-                    <div className="switcher-body">
-                        {currencies.map((currency,index) => 
-                            <p value={index} key={currency.label} onClick={()=>selectCurrency(index)}>
-                                <i>{currency.symbol}</i>
-                                <span>{currency.label}</span>
-                            </p>)}
-                    </div>}
-                </div>
-            
+            currencies.length !== 0 &&
+            <div className="switcher">  
+                <span onClick={this.opener} ref={this.ref}
+                className = {`toggler ${this.state.opened ? "active" : ""}`}>
+                    {currencies[selectedCurr].symbol}
+                </span>
+                {this.state.opened &&
+                <div className="switcher-body">
+                    {currencies.map((currency,index) => 
+                        <p value={index} key={currency.label} onClick={()=>selectCurrency(index)}>
+                            <i>{currency.symbol}</i>
+                            <span>{currency.label}</span>
+                        </p>)}
+                </div>}
+            </div>
         )
     }
 }

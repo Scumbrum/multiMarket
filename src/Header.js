@@ -37,6 +37,15 @@ class Header extends React.Component {
         document.addEventListener("click", this.unsetter)
     }
 
+    componentDidUpdate(){
+        const {cart} = this.props
+        sessionStorage.setItem("cart", JSON.stringify(cart))
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener("click", this.unsetter)
+    }
+
     unsetter = (e) => {
         const notToClose = this.references.find(ref => {
             if(!ref.current) {
@@ -48,15 +57,6 @@ class Header extends React.Component {
             this.setState({opened:false})
             this.props.handler()
         }
-    }
-
-    componentDidUpdate(){
-        const {cart} = this.props
-        sessionStorage.setItem("cart", JSON.stringify(cart))
-    }
-
-    componentWillUnmount(){
-        document.removeEventListener("click", this.unsetter)
     }
 
     opener = (e) => {

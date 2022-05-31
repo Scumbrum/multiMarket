@@ -1,3 +1,5 @@
+import { Action} from "./acitionTypes"
+
 const initialState = {
     categories: [],
     selected: -1,
@@ -6,11 +8,11 @@ const initialState = {
 
 export default function categoryReducer(state = initialState, action) {
     switch(action.type) {
-        case "FetchCategories":
+        case Action.FETCH_CATEGORIES:
             return {...state, categories: action.payload}
-        case "SelectCategory":
+        case Action.SELECT_CATEGORY:
             return {...state, selected: action.payload}
-        case "SetCategoryError":
+        case Action.SET_CATEGORY_ERROR:
             return {...state, error: action.payload}
         default:
             return state

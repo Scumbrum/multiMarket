@@ -11,12 +11,10 @@ class Scroller extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener("wheel", this.listener)
         window.addEventListener("scroll", this.listener)
     }
 
     componentWillUnmount() {
-        window.removeEventListener("wheel", this.listener)
         window.addEventListener("scroll", this.listener)
     }
 

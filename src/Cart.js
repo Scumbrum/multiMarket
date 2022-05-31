@@ -19,7 +19,6 @@ class Cart extends React.Component {
 
     getTaxed = () => {
         const {selected,totalPrices, tax} = this.props
-        console.log(totalPrices[selected])
         if(totalPrices[selected]) {
             return Math.round(tax * totalPrices[selected] * 100) / 100
         }
@@ -30,10 +29,11 @@ class Cart extends React.Component {
         const {products, selected, currencies, totalPrices, tax} = this.props
         
         return(
+            products.length > 0 ?
             <section className="main-container">
                 <h1 className="cart-title">Cart</h1>
                 <ul className="cart-list">
-                     {products.map((product,index) =>
+                    {products.map((product,index) =>
                     <CartItem product={product} key={index} index={index} all={true}/>)}
                 </ul>
                 <div className="cart-info">
@@ -49,14 +49,19 @@ class Cart extends React.Component {
                     </p>
                     <p className="cart-prop">
                         <span className="cart-field">Total:</span>
-                        <span className="cart-value">{currencies[selected].symbol}{totalPrices[selected]}</span>
+                        <span className="cart-value">
+                            {currencies[selected].symbol}{totalPrices[selected]}
+                        </span>
                     </p>
                 </div>
                 {products.length !== 0 &&
-                    <button className="cart success-button" onClick={()=>order(this.props.clearBag)}>Order</button>
+                    <button className="cart success-button" onClick={()=>order(this.props.clearBag)}>
+                        Order
+                    </button>
                 }
                 <Scroller/>
-            </section>
+            </section>:
+            <h2 className="cart empty">Empty bag</h2>
         )
     }
 }

@@ -54,6 +54,11 @@ export function removeTotalPrices(prices, product) {
     return getTotalPrices(prices, product, -1)
 }
 
+export function changeTotalPrices(prices, product, value) {
+    let newPrices = getTotalPrices(prices, product, -product.quantity)
+    return getTotalPrices(newPrices, product, value)
+}
+
 function findProduct(products, product) {
     const suits = products.filter(current => current.id === product.id)
     let same = false

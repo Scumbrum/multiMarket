@@ -25,11 +25,10 @@ export async function fetchProducts(category, client) {
 }
 
 export async function getData(selected, client){
-    const items = JSON.parse(sessionStorage.getItem("attributes"))
+    let product = JSON.parse(sessionStorage.getItem("attributes"))
     const pathItem = window.location.pathname.split("/")[2]
-    let product = items && items.find(item => item.id === pathItem)
     const current = selected || pathItem
-    if(!product || !product.attributes) {
+    if(!product || !product.attributes || product.id!==current) {
         product = await client.query({
             query: getProduct,
             variables: {
@@ -37,7 +36,7 @@ export async function getData(selected, client){
             }})
         product = product.data.product
     }
-    return {current, product: product}
+    return {current, product}
 }
 
 export function productAdaptor(data, products) {
@@ -67,7 +66,7 @@ export function productsDistibution(products, id) {
 
 export function calculateTrack(element) {
     let difY = element.getBoundingClientRect().top - 15
-    difY += element.offsetHeight / 3
+    difY += element.offsetHeight / 2
     let difX = 0
     if(window.innerWidth > 1200) {
         const base = (window.innerWidth - 1200)/2

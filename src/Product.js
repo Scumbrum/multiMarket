@@ -14,6 +14,7 @@ class Product extends React.Component {
 
     constructor(props) {
         super(props)
+        this.product = null
         this.state = {
             exist: true,
             showAnimation: false
@@ -22,7 +23,6 @@ class Product extends React.Component {
 
     componentDidMount() {
         const {client, selected, selectProduct, loadProductInfo} = this.props
-        
         getData(selected, client)
         .then(data=> {
             if(!data.product) {
@@ -38,8 +38,9 @@ class Product extends React.Component {
     }
     
     componentDidUpdate() {
-        const {products} = this.props
-        sessionStorage.setItem("attributes", JSON.stringify(products))
+        const {products, selected} = this.props
+        const product = products.find(product => product.id === selected)
+        sessionStorage.setItem("attributes", JSON.stringify(product))
     }
 
     handler = ({attributeName, index})=> {
@@ -63,16 +64,19 @@ class Product extends React.Component {
     }
 
     render() {
-        const {products, selected, currency, error} = this.props
+        const {currency, error, selected, products} = this.props
         const {handler} = this
         const product = products.find(product => product.id === selected)
         const price = product && product.prices[currency]
         return(
             this.state.exist && !error ? 
             product && product.attributes ? 
-            <section className="main-container">
+            <section className={this.props.className}>
                 <div className="product-container">
                     <div className="product-view">
+                        <Flier shown = {this.state.showAnimation}>
+                            <img src={product.gallery[0]} alt="flier"/>
+                        </Flier>
                         <AttributeController
                         {...getAttributeProps({product,
                             attributeName:"image",
@@ -104,9 +108,6 @@ class Product extends React.Component {
                             </p>
                         </div>
                         <div className="product-controlls">
-                            <Flier shown = {this.state.showAnimation}>
-                                <img src={product.gallery[0]} alt="flier"/>
-                            </Flier>
                             {product.inStock ? 
                             <button className="to-cart-button" onClick={this.adder}>
                                 Add to cart

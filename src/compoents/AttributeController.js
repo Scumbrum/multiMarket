@@ -23,7 +23,7 @@ class AttributeController extends React.Component {
         let productIndex = this.getIndex()
         if(this.props.elements) {
             return this.props.elements.map((element, index) => 
-            <li onClick={()=>this.props.handler({attributeName, index, productIndex})}
+            <li onMouseUp={()=>this.props.handler({attributeName, index, productIndex})}
                 key={index}
                 className={index === currentAttribute ? "active": null}>
                 {pattern(element)}
@@ -43,18 +43,18 @@ class AttributeController extends React.Component {
    
     render() {
         return(
-                this.props.separate ?
-                <>
-                    <ul className="vertical-list">
-                        {this.generateSwiperPanel()} 
-                    </ul>
-                    <div className="current-display">
-                        {this.props.pattern(this.props.elements[this.props.currentAttribute])}
-                    </div>
-                </>:
-                <ul className="attribute-list">
-                    {this.generatePanel()} 
+            this.props.separate ?
+            <>
+                <ul className="vertical-list">
+                    {this.generateSwiperPanel()} 
                 </ul>
+                <div className="current-display">
+                    {this.props.pattern(this.props.elements[this.props.currentAttribute])}
+                </div>
+            </>:
+            <ul className="attribute-list">
+                {this.generatePanel()} 
+            </ul>
         )
     }
 }

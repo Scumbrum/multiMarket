@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import ErrorPage from "./compoents/ErrorPage";
 import NotFound from "./compoents/NotFound";
 import {loadProductInfo, setProductsError, selectCategories, addProduct} from "./redux/actions"
-import { fetchProducts, getData, productAdaptor} from "./services/productService";
+import { fetchProducts} from "./services/productService";
 import Loader from "./compoents/Loader";
 import "./styles/products.css"
 import Scroller from "./compoents/Scroller";
-import { addTotalPrices, cartProductAdaptor } from "./services/cartService";
 
 class Category extends React.Component {
 
@@ -30,6 +29,15 @@ class Category extends React.Component {
     componentDidMount() {
         this.loader()
     }
+
+    componentDidUpdate() {
+        if(this.loading) {
+            this.loading = false
+            this.name=this.props.name
+        } else {
+            this.loader()
+        }
+    }
     
     checker = () => {
         const {categories} = this.props
@@ -40,15 +48,6 @@ class Category extends React.Component {
             }
         }
         return 
-    }
-
-    componentDidUpdate() {
-        if(this.loading) {
-            this.loading = false
-            this.name=this.props.name
-        } else {
-            this.loader()
-        }
     }
 
     loader = () => {
@@ -67,27 +66,11 @@ class Category extends React.Component {
         })
     }
 
-    choser = (id) => {
-        const {client, addProduct, products} = this.props
-        getData(id, client)
-        .then(data=> {
-            let newProducts = productAdaptor(data.product, products)
-            const product = newProducts.find(product => product.id === id)
-            loadProductInfo(newProducts)
-            newProducts = cartProductAdaptor(product, this.props.cartProducts)
-            const totalPrices = addTotalPrices(this.props.totalPrices, product)
-            addProduct(newProducts, totalPrices)
-        })
-        .catch((error) => {
-            this.props.setProductsError(error.message)
-        })
-    }
-
     importItem = (product) => {
         const Item = React.lazy(()=>import("./compoents/Item"))
         return (
             <li key={product.id}>
-                <Item item={product} choser={this.choser}/>
+                <Item item={product} choser={this.props.opener}/>
             </li>
         )
     }
@@ -98,9 +81,7 @@ class Category extends React.Component {
             this.checker() && !error ?
             products.length !== 0 ?
             <section>
-                {/* {this.state.chosen !== -1 && 
-                    <PopupProduct id={this.state.chosen}/>
-                } */}
+                
                 <div className="main-container">
                     <h1 className="title">{categories[selected].name}</h1>
                     <ul className="products-gallery">

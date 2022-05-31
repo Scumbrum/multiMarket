@@ -16,17 +16,17 @@ class Flier extends React.Component {
             this.dif = calculateTrack(this.ref.current)
         }
     }
-
-    listener = () => {
-        this.dif = calculateTrack(this.ref.current)
-    }
-
+    
     componentDidUpdate() {
         this.componentDidMount()
     }
 
     componentWillUnmount() {
         window.removeEventListener("scroll", this.listener)
+    }
+
+    listener = () => {
+        this.dif = calculateTrack(this.ref.current)
     }
    
     render() {

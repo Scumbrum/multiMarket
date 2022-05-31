@@ -1,0 +1,18 @@
+export const Action = {
+    FETCH_CURRENCY: "FetchCurrency",
+    FETCH_CATEGORIES: "FetchCategories",
+    SELECT_CATEGORY: "SelectCategory",
+    SET_CATEGORY_ERROR: "SetCategoryError",
+    SELECT_PRODUCT: "SelectProduct",
+    LOAD_PRODUCT_INFO: "LoadProductInfo",
+    SET_ATTRIBUTE :"SetAttribute",
+    LOAD_CART: "LoadCart",
+    SET_CART_ATTRIBUTE: "SetCartAttribute",
+    CLEAR_BAG: "ClearBag",
+    ADD_PRODUCT: "AddProduct",
+    INCREMENT_PRODUCT: "IncrementProduct",
+    CHANGE_PRODUCT: "ChangeAmount",
+    DECREMENT_PRODUCT: "DecrementProduct",
+    SELECT_CURRENCY: "SelectCurrency",
+    SET_PRODUCT_ERROR: "ProductsError",
+}

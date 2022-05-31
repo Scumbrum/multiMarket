@@ -1,36 +1,67 @@
 import React from "react";
 import { connect } from "react-redux";
-import {decrementProduct, incrementProduct, selectProduct, setCartAttribute} from "../redux/actions"
-import { addTotalPrices, cartAttributeAdaptor, removeTotalPrices } from "../services/cartService";
+import {changeProduct,
+    decrementProduct,
+    incrementProduct,
+    selectProduct,
+    setCartAttribute} from "../redux/actions"
+import { addTotalPrices,
+    cartAttributeAdaptor,
+    changeTotalPrices,
+    removeTotalPrices } from "../services/cartService";
 import { getAttributeProps } from "../services/productService";
 import AttributeController from "./AttributeController";
 import ImageSwiper from "./ImageSwiper";
 
-
 class CartItem extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.focus = false
+        this.state = {
+            count: 1
+        }
+    }
+
+    componentDidMount() {
+        const {product} = this.props
+        this.setState({count:product.quantity})
+    } 
+
+    componentDidUpdate() {
+        const {product} = this.props
+        if(!this.focus &&product.quantity!==this.state.count) {
+            this.setState({count:product.quantity})
+        }
+    }
+
     handler = ({attributeName, index, productIndex})=> {
-        setTimeout(()=> {
-            const {products} = this.props
-            const newProducts = cartAttributeAdaptor(products, attributeName, index, productIndex)
-            this.props.setCartAttribute(newProducts)
-        }, 50)
+        const {products} = this.props
+        const newProducts = cartAttributeAdaptor(products, attributeName, index, productIndex)
+        this.props.setCartAttribute(newProducts)
     }
 
     increment = () => {
         const {incrementProduct, index, totalPrices} = this.props
         const prices = addTotalPrices(totalPrices,this.props.product)
         incrementProduct(index, prices)
+        this.setState({count:this.state.count+1})
     }
 
     decrement = () => {
-        const {decrementProduct, index, totalPrices, products, product} = this.props
-        setTimeout(()=> {
-            if(products.indexOf(product)!==-1) {
-                const prices = removeTotalPrices(totalPrices,product)
-                decrementProduct(index, prices)
-            }
-        }, 50)
+        const {decrementProduct, index, totalPrices, product} = this.props
+        const prices = removeTotalPrices(totalPrices,product)
+        decrementProduct(index, prices)
+        this.setState({count:this.state.count-1})
+        
+    }
+
+    change = (value) => {
+        const {index, totalPrices, products, product} = this.props
+        if(products.indexOf(product)!==-1) {
+            const prices = changeTotalPrices(totalPrices,product,value)
+            this.props.changeProduct(index, prices, value)
+        }
     }
 
     getGallery = () => {
@@ -38,6 +69,27 @@ class CartItem extends React.Component {
         return product.gallery.map((image, index) => 
             <img src={image} alt={index} key={index}/>
         )
+    }
+
+    changer = (e) => {
+        if(e.key !== "Enter") {
+            return
+        }
+        e.target.blur()
+        this.focus = false
+        this.change(this.state.count)
+    }
+
+    listener = (e) => {
+        this.focus = true
+        let value = e.target.value
+        if(!/^\d*/.test(value)) {
+            return
+        }
+        if(value === "") {
+            value = "0"
+        }
+        this.setState({count: parseInt(value)})
     }
    
     render() {
@@ -68,9 +120,12 @@ class CartItem extends React.Component {
                 </div>
                 <div className="item-gallery">
                     <div className="item-counter">
-                        <button onClick={this.increment}>+</button>
-                        <p>{product.quantity}</p>
-                        <button onClick={this.decrement}>-</button>
+                        <button onMouseUp={this.increment}>+</button>
+                            <input onChange={this.listener}
+                            value={this.state.count}
+                            onKeyUp={this.changer}
+                            onBlur={this.changer}/>
+                        <button onMouseUp={this.decrement}>-</button>
                     </div>
                     {all ?
                     <ImageSwiper gallery={this.getGallery()} amount={1}/>:
@@ -93,7 +148,8 @@ const dispatchToProps = {
     selectProduct,
     incrementProduct,
     decrementProduct,
-    setCartAttribute
+    setCartAttribute,
+    changeProduct
 }
 
 

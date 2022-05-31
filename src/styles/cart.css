@@ -1,6 +1,5 @@
 .minicart {
-    width: 400px;
-    max-width: 400px;
+    width: 450px;
     position: absolute;
     padding: 30px 15px;
     top: 48px;
@@ -56,7 +55,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .item-counter p {
@@ -78,6 +77,14 @@
 .item-counter button:active {
     background-color: #1D1F22;
     color: #FFF;
+}
+
+.item-counter input {
+    width: 100%;
+}
+
+.item-counter input:focus {
+    outline: none;
 }
 
 .item-gallery {
@@ -241,6 +248,10 @@
     text-align: center;
     text-transform: uppercase;
     color: #1D1F22;
+}
+
+.cart.empty {
+    margin-top: 30px;
 }
 
 .left-arrow {
