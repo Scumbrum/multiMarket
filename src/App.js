@@ -46,6 +46,7 @@ class App extends React.Component {
   render() {
     const {headerError} = this.props
     const transform = this.state.cover &&`translate(0px,${-this.position}px)`
+    console.log(process.env)
     return (
       <ApolloConsumer>
         {client  =>

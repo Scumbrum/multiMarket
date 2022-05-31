@@ -1,4 +1,4 @@
-export const SERVER = "https://market-scumbrum.herokuapp.com/" || "http://localhost:4000/"
+export const SERVER = process.env.SERVER || "http://localhost:4000/"
 
 export const ERROR_HENDLER = ({graphQLErrors, networkError, ...rest}) => {
     if(graphQLErrors) {
