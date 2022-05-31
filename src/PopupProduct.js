@@ -6,6 +6,8 @@ import "./styles/products.css"
 import { attributeAdaptor, getAttributeProps, getData, productAdaptor } from "./services/productService";
 import AttributeController from "./compoents/AttributeController";
 import Flier from "./compoents/Flier";
+import ErrorPage from "./compoents/ErrorPage"
+import Loader from "./compoents/Loader"
 
 class PopupProduct extends React.Component {
 
@@ -63,45 +65,50 @@ class PopupProduct extends React.Component {
     }
    
     render() {
-        const {products, selected, currency} = this.props
+        const {products, selected, currency, error} = this.props
         const {handler} = this
         const product = products&&products.find(i => i.id === selected)
         const price = product&&product.prices[currency]
         return(
-            product.attributes !==undefined &&
             <section className="popup" ref={this.ref}>
-                <span onClick={this.props.opener} className="popup-closer">X</span>
-                <div className="popup-container">
-                    <Flier shown = {this.state.activeAnimation}>
-                        <img src={product.gallery[0]} alt="flier"/>
-                    </Flier>
-                    <img src = {product.gallery[0]} alt={product.name}/>
-                    <div className="popup-content">
-                        <h1>{product.name}</h1>
-                        <h3 className="brand">{product.brand}</h3>
-                        {product.attributes.map(attribute =>
-                                <div key={attribute.name} className="product-attributes">  
-                                    <h3 className="attribute-title">{attribute.name}</h3>
-                                    <AttributeController
-                                    {...getAttributeProps({product,
-                                        attributeName:attribute.name,
-                                        elements:attribute.items,
-                                        separate:false,
-                                        handler})
-                                    }/>
-                                </div>
-                        )}
-                        <p className="attribute-title">Price:</p>
-                            <p className="price">
-                                <b>
-                                    {price.currency.symbol}{price.amount}
-                                </b>
-                            </p>
-                        <button className="to-cart-button" onClick={this.adder}>
-                            Add to cart
-                        </button>
+                {product.attributes && !error ?
+                <>
+                    <span onClick={this.props.opener} className="popup-closer">X</span>
+                    <div className="popup-container">
+                        <Flier shown = {this.state.activeAnimation}>
+                            <img src={product.gallery[0]} alt="flier"/>
+                        </Flier>
+                        <img src = {product.gallery[0]} alt={product.name}/>
+                        <div className="popup-content">
+                            <h1>{product.name}</h1>
+                            <h3 className="brand">{product.brand}</h3>
+                            {product.attributes.map(attribute =>
+                                    <div key={attribute.name} className="product-attributes">  
+                                        <h3 className="attribute-title">{attribute.name}</h3>
+                                        <AttributeController
+                                        {...getAttributeProps({product,
+                                            attributeName:attribute.name,
+                                            elements:attribute.items,
+                                            separate:false,
+                                            handler})
+                                        }/>
+                                    </div>
+                            )}
+                            <p className="attribute-title">Price:</p>
+                                <p className="price">
+                                    <b>
+                                        {price.currency.symbol}{price.amount}
+                                    </b>
+                                </p>
+                            <button className="to-cart-button" onClick={this.adder}>
+                                Add to cart
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </>:
+                !error ?
+                <Loader/>:
+                <ErrorPage message={error}/>}
             </section>
         )
     }
@@ -114,6 +121,7 @@ const stateToProps = (state) => {
         cartProducts: state.cartReducer.products,
         totalPrices: state.cartReducer.totalPrices,
         currency: state.currencyReducer.selected,
+        error: state.productsReducer.error
     }
 }
 

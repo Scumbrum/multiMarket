@@ -23,7 +23,7 @@ export function selectCategories(category) {
 
 export function setCategoryError(message) {
     return {
-        type:Action.SET_CATEGORY_ID,
+        type:Action.SET_CATEGORY_ERROR,
         payload: message
     }
 }

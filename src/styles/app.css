@@ -187,6 +187,14 @@ a {
     transform: translate(-50%, 0);
     background-color: #FFF;
     width: 70%;
+    min-height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup .error, .popup .loader-container {
+    margin: 0;
 }
 
 .popup-closer {
