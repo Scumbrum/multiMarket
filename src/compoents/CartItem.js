@@ -98,8 +98,8 @@ class CartItem extends React.Component {
             <li className="cart-item">
                 <div className="item-content">
                     <div className="item-text">
-                        <h1 className="cart-item-title">{product.name}</h1>
-                        <h3>{product.brand}</h3>
+                        <h1 className="cart-item-title">{product.brand}</h1>
+                        <h1>{product.name}</h1>
                     </div>
                     <p className="item-price">
                         {product.prices[selectedCurrency].currency.symbol}{product.prices[selectedCurrency].amount}

@@ -85,8 +85,8 @@ class Product extends React.Component {
                             handler})}/>
                     </div>
                     <div className="product-content">
-                        <h1>{product.name}</h1>
-                        <h3 className="brand">{product.brand}</h3>
+                        <h1>{product.brand}</h1>
+                        <h1 className="product-title">{product.name}</h1>
                         {product.attributes.map(attribute =>
                             <div key={attribute.name} className="product-attributes">  
                                 <h3 className="attribute-title">{attribute.name}</h3>

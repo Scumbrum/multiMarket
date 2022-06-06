@@ -64,14 +64,19 @@
 
 .item-counter button {
     background: transparent;
-    width: 25px;
-    height: 25px;
+    width: min(40px, 3vw);
+    height: min(40px, 3vw);
     border: 2px solid #1D1F22;
     line-height: 8px;
     cursor: pointer;
     font-size: 20px;
     transition-duration: .1s;
     transition-timing-function: ease-out;
+}
+
+.minicart .item-counter button {
+    width: 25px;
+    height: 25px;
 }
 
 .item-counter button:active {
@@ -81,6 +86,13 @@
 
 .item-counter input {
     width: 100%;
+    text-align: center;
+    font-size: 24px;
+    margin: 8px 0;
+}
+
+.minicart .item-counter input {
+    font-size: 18px;
 }
 
 .item-counter input:focus {
@@ -89,11 +101,13 @@
 
 .item-gallery {
     display: flex;
+    width: 30%;
+    justify-content: space-between;
     height: fit-content;
 }
 
 .item-gallery img {
-    width: 150px;
+    width: 80%;
 }
 
 .total-display {
@@ -272,4 +286,9 @@
     height: 50%;
     display: block;
     transform: rotate(135deg) translate(10%, -50%);
+}
+
+.cart-item .swiper {
+    width: 90%;
+    height: min(33vw, 350px);
 }

@@ -38,15 +38,15 @@
 .stock-label {
     position: absolute;
     z-index: 1;
-    top: 12px;
-    left: 0;
-    width: 100%;
-    background-color: #EEEEEE;
-    color: #1D1F22;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #8D8F9A;
+    width: fit-content;
+    max-width: 100%;
+    word-wrap: break-word;
+    font-size: 24px;
     text-transform: uppercase;
-    text-align: center;
-    padding: 15px 0;
-    font-weight: bold;
 }
 
 .product-preview .main {
@@ -76,9 +76,13 @@
     height: 50%;
 }
 
+.product-title {
+    color: #1D1F22;
+    font-weight: normal;
+}
+
 .product-item .product-title {
     margin-top: 30px;
-    color: #1D1F22;
 }
 
 .product-price {
